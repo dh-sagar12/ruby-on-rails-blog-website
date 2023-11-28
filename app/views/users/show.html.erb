@@ -1,0 +1,75 @@
+<section  style="background-color: #f4f5f7;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center  h-100">
+      <div class="col col-lg-6 mb-4 mb-lg-0">
+        <div class="card mb-3" style="border-radius: .5rem;">
+          <div class="row g-0">
+            <div class="col-md-4 gradient-custom text-center "
+              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+              <h5>
+                <%= @user.full_name %>
+              </h5>
+              <p>
+                <%= @user.username %>
+              </p>
+              <% if authenticated_user == @user %>
+                <%= link_to edit_user_path(@user.id) do  %>
+                  <i class="far fa-edit mb-5"></i>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="col-md-8">
+              <div class="card-body p-4">
+                <h6>My Details</h6>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <h6>Email</h6>
+                    <p class="text-muted">
+                      <%= @user.email %>
+                    </p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Phone</h6>
+                    <p class="text-muted">123 456 789</p>
+                  </div>
+                </div>
+                <h6>Projects</h6>
+                <hr class="mt-0 mb-4">
+                <div class="d-flex justify-content-start">
+                  <a href="#"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                  <a href="#"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                  <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class= 'text-center' >My Articles</h2>
+      <div class="row align-items-md-stretch">
+        <% @user.articles.each do |article| %>
+          <div class="col-md-6 p-2">
+            <div class="h-100 p-5 text-bg-dark rounded-3">
+              <h2>
+                <%= article.title %>
+              </h2>
+              <p>
+                <%= truncate(article.description , length: 100)%>
+              </p>
+              <div class='d-flex' >
+                <%= link_to 'View Article', article_path(article), class: 'btn btn-outline-success mx-1'  %>
+                <% if @user == authenticated_user %>
+                  <%= link_to 'Edit Article', edit_article_path(article), class: 'btn btn-outline-light mx-1'  %>
+                  <%= button_to 'Delete Article',article, method: :delete, data: { turbo_confirm: "Are you sure? You want to delete?" }, class: 'btn btn-outline-danger mx-1'  %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,64 @@
+<div id='message'>
+  <% flash.each do |name, message| %>
+    <% if name =='alert' %>
+      <div class="alert alert-danger text-center alert-dismissible fade show"  role="alert">
+        <%= message %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% else %>
+      <div class="alert alert-success text-center alert-dismissible fade show"  role="alert">
+        <%= message %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+<nav class="navbar navbar-expand-lg  px-5 py-3 bg-dark" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Rails Blog</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to "Home", root_path, class: 'nav-link', "aria-current" => "page"  %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "About Us", about_page_path, class: 'nav-link', "aria-current" => "page"  %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Blogs", about_page_path, class: 'nav-link', "aria-current" => "page"  %>
+        </li>
+        <% if is_authenticated? %>
+          <li class="nav-item">
+            <%= link_to "Manage Articles", articles_path, class: 'nav-link', "aria-current" => "page"  %>
+          </li>
+        <% end %>
+        <li class="nav-item">
+          <%= link_to "Contact Us", about_page_path, class: 'nav-link', "aria-current" => "page"  %>
+        </li>
+      </ul>
+      <form class="d-flex me-5" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      <% if  is_authenticated? %>
+        <%= link_to user_path(authenticated_user)	, class: 'd-flex flex-column' do %>
+          <i class="fa-solid fa-user text-white fs-4"></i>
+          Hello <%= authenticated_user[:username] %>
+        <% end %>
+        <div class='flex px-3'>
+          <%= button_to "Logout", user_logout_path,method: :delete,  class:'btn btn-outline-danger', role: 'button'   %>
+        </div>
+      <% else %>
+        <div class='flex px-3'>
+          <%= link_to "Log in", user_login_path, class:'btn btn-secondary', role: 'button'   %>
+          <%= link_to "Sign up", user_sign_up_path, class:'btn btn-secondary', role: 'button'   %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,36 @@
+<div class="m-5">
+  <%= link_to "Add New", new_article_path ,  class: "btn btn-secondary my-4" %>
+  <h1>All Articles</h1>
+  <table class="table table-hover table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Creator</th>
+        <th scope="col">Created At</th>
+        <th scope="col">Updated At</th>
+        <th scope="col" colspan='2'>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @articles.each do |article| %>
+        <tr>
+          <td><%= article.title %></td>
+          <td><%=  truncate(article.description, length: 100) %></td>
+          <td><%=  article.user.full_name %></td>
+          <td><%=  time_ago_in_words(article.created_at) %></td>
+          <td><%=  time_ago_in_words(article.updated_at) %></td>
+          <td>
+            <span class='d-flex'>
+              <%= link_to "Edit", edit_article_path(article), class: "btn btn-outline-secondary mx-1" %>
+              <%= button_to "Delete", article, method: :delete, data: { turbo_confirm: "Are you sure? You want to delete?" }, class: "btn btn-outline-danger mx-1" %>
+            </span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="apple_pagination">
+    <%= will_paginate @articles, :container => false %>
+  </div>
+</div>

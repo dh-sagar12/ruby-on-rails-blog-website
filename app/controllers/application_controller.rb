@@ -21,9 +21,9 @@ class ApplicationController < ActionController::Base
   end
 
   def admin_required(redirect_url: user_login_path)
-    if !authenticated_user? && !is_admin?
+    if !(is_authenticated? && is_admin?)
       redirect_to redirect_url
-      false[:alert] = "User lacks Permission to view this page"
+      flash[:alert] = "User lacks Permission to view this page"
     end
   end
 end

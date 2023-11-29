@@ -10,20 +10,21 @@ class ApplicationController < ActionController::Base
   end
 
   def is_admin?
-    authenticated_user.is_admin
+    is_authenticated? && authenticated_user.is_admin
   end
 
   def login_required(redirect_url: user_login_path)
     if !is_authenticated?
       redirect_to redirect_url
-      flash[:alert] = "Unauthorized User access denied!!!"
+      flash[:alert] = "You must Logged in to view this page!!!"
     end
   end
 
   def admin_required(redirect_url: user_login_path)
     if !(is_authenticated? && is_admin?)
       redirect_to redirect_url
-      flash[:alert] = "User lacks Permission to view this page"
+      is_authenticated? ?
+        flash[:alert] = "User lacks Permission to view this page" : flash[:alert] = "You must Logged in to view this page!!!"
     end
   end
 end

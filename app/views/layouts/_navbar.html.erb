@@ -37,6 +37,11 @@
             <%= link_to "Manage Articles", articles_path, class: 'nav-link', "aria-current" => "page"  %>
           </li>
         <% end %>
+        <% if is_admin? %>
+          <li class="nav-item">
+            <%= link_to "Manage Categories", categories_path, class: 'nav-link', "aria-current" => "page"  %>
+          </li>
+        <% end %>
         <li class="nav-item">
           <%= link_to "Contact Us", about_page_path, class: 'nav-link', "aria-current" => "page"  %>
         </li>

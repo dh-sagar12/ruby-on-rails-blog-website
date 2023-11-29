@@ -1,12 +1,13 @@
 <div class="m-5">
   <%= link_to "Add New", new_article_path ,  class: "btn btn-secondary my-4" %>
   <h1>All Articles</h1>
-  <table class="table table-hover table-sm">
+  <table class="table table-hover table-sm vw-full overflow-scroll">
     <thead>
       <tr>
         <th scope="col">Title</th>
         <th scope="col">Description</th>
         <th scope="col">Creator</th>
+        <th scope="col">Categories</th>
         <th scope="col">Created At</th>
         <th scope="col">Updated At</th>
         <th scope="col" colspan='2'>Actions</th>
@@ -16,8 +17,13 @@
       <% @articles.each do |article| %>
         <tr>
           <td><%= article.title %></td>
-          <td><%=  truncate(article.description, length: 100) %></td>
+          <td><%=  truncate(article.description, length: 50) %></td>
           <td><%=  article.user.full_name %></td>
+          <td>
+            <% if article.categories.any? %>
+              <%= render article.categories %>
+            <% end %>
+          </td>
           <td><%=  time_ago_in_words(article.created_at) %></td>
           <td><%=  time_ago_in_words(article.updated_at) %></td>
           <td>

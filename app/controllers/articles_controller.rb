@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :login_required, except: [:show]
   before_action :set_article, only: [:show, :edit, :update, :destroy]
-  before_action :admin_or_current_user, except: [:show, :index]
+  before_action :admin_or_current_user, except: [:show, :index, :new, :create]
 
   def show
   end
@@ -66,6 +66,8 @@ class ArticlesController < ApplicationController
   end
 
   def set_article_params
-    params.require(:article).permit(:title, :description)
+    puts "*" * 100
+    puts params.require(:article).permit(:title, :description, category_ids: [])
+    params.require(:article).permit(:title, :description, category_ids: [])
   end
 end
